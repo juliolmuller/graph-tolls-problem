@@ -25,7 +25,6 @@ Condition *create_condition_node(int citiesCount, int roadsCount, int currCity, 
   return condition;
 }
 
-
 void add_condition_node(Condition **conditionsList, Condition *newCondition)
 {
   if (*conditionsList == NULL) {
@@ -36,5 +35,19 @@ void add_condition_node(Condition **conditionsList, Condition *newCondition)
       aux = aux->next;
     }
     aux->next = newCondition;
+  }
+}
+
+void destroy_condition_structures(Condition *condition)
+{
+  if (condition) {
+    Road *road, *aux = condition->roads;
+    while (aux) {
+      road = aux;
+      aux = aux->next;
+      free(road);
+    }
+    destroy_condition_structures(condition->next);
+    free(condition);
   }
 }

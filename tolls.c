@@ -54,7 +54,7 @@ void main()
     conditionNode = conditionNode->next;
   }
 
-  // boolean graph[][];
+  destroy_condition_structures(conditions);
 }
 
 void validate_condition_params(int citiesCount, int roadsCount, int currCity, int maxTools)
