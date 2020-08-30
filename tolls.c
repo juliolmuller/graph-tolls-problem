@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include "trip-conditions.h"
 
-#define true 1
-#define false 0
-typedef char bool;
-
 void validate_condition_params(int, int, int, int);
 void validate_roads_params(int, int, int);
 
@@ -37,7 +33,8 @@ void main()
 
   conditionNode = conditions;
   while (conditionNode) {
-    printf("%i - %i - %i - %i - Roads: ",
+    // DEBUG: remove outputs
+    printf("\n%i - %i - %i - %i - Roads: ",
       conditionNode->citiesCount,
       conditionNode->roadsCount,
       conditionNode->currCity,
@@ -51,6 +48,10 @@ void main()
       );
       printf("%s", i == conditionNode->roadsCount -1 ? "\n" : ", ");
     }
+
+    GraphMatrix graph = graph_mount(conditionNode);
+    graph_print(graph, conditionNode->citiesCount);
+    graph_destroy(graph);
     conditionNode = conditionNode->next;
   }
 
