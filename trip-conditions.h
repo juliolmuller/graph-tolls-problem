@@ -1,10 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "avl-tree.h"
 
-#define true 1
-#define false 0
-typedef char bool;
 typedef bool** GraphMatrix;
 
 typedef struct _road {
