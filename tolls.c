@@ -49,9 +49,13 @@ void main()
       printf("%s", i == conditionNode->roadsCount -1 ? "\n" : ", ");
     }
 
-    GraphMatrix graph = graph_mount(conditionNode);
-    graph_print(graph, conditionNode->citiesCount);
-    graph_destroy(graph);
+    int *visitedCities = evaluate_visitable_cities(conditionNode);
+    i = 0;
+    while (visitedCities[i]) {
+      printf("%i ", visitedCities[i]);
+      i++;
+    }
+
     conditionNode = conditionNode->next;
   }
 
