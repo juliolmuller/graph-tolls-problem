@@ -151,7 +151,7 @@ TreeNode *tree_remove_node(TreeNode *root, int value)
     return root;
 
   if (!node->left || !node->right) {
-    next = !node->left ? node->left : node->right;
+    next = node->left ? node->left : node->right;
   } else {
     aux = node;
     next = node->left;
