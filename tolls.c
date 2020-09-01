@@ -13,7 +13,6 @@ void main()
   Road *roads = NULL;
 
   while (true) {
-    printf("Add new condition: "); // DEBUG: remove on production
     scanf("%i %i %i %i", &citiesCount, &roadsCount, &currCity, &maxTools);
 
     if (citiesCount == 0 && roadsCount == 0 && currCity == 0 && maxTools == 0) break;
@@ -22,7 +21,6 @@ void main()
     roads = (Road *) malloc(sizeof(Road) * roadsCount);
     int i;
     for (i = 0; i < roadsCount; i++) {
-      printf("Add road %i of %i: ", i + 1, roadsCount); // DEBUG: remove on production
       scanf("%i %i", &roads[i].city1, &roads[i].city2);
       validate_roads_params(citiesCount, roads[i].city1, roads[i].city2);
     }
@@ -31,31 +29,19 @@ void main()
     add_condition_node(&conditions, conditionNode);
   }
 
+  int t = 0;
   conditionNode = conditions;
   while (conditionNode) {
-    // DEBUG: remove outputs
-    printf("\n%i - %i - %i - %i - Roads: ",
-      conditionNode->citiesCount,
-      conditionNode->roadsCount,
-      conditionNode->currCity,
-      conditionNode->maxTools
-    );
-    int i;
-    for (i = 0; i < conditionNode->roadsCount; i++) {
-      printf("(%i, %i)",
-      conditionNode->roads[i].city1,
-      conditionNode->roads[i].city2
-      );
-      printf("%s", i == conditionNode->roadsCount -1 ? "\n" : ", ");
-    }
+    printf("Teste %i\n", ++t);
 
+    int i = 0;
     int *visitedCities = evaluate_visitable_cities(conditionNode);
-    i = 0;
     while (visitedCities[i]) {
       printf("%i ", visitedCities[i]);
       i++;
     }
 
+    printf("\n\n");
     conditionNode = conditionNode->next;
   }
 
