@@ -84,9 +84,12 @@ void validate_condition_params(int citiesCount, int roadsCount, int currCity, in
 
 void validate_roads_params(int citiesCount, int city1, int city2)
 {
-
   if (city1 < 1 || city1 > citiesCount || city2 < 1 || city2 > citiesCount) {
     printf("\tAs cidades identificadas devem ser entre 1 e %i\n", citiesCount);
+    exit(1);
+  }
+  if (city1 == city2) {
+    printf("\tAs estradas devem conectar cidades diferentes\n");
     exit(1);
   }
 }
