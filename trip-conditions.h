@@ -7,7 +7,6 @@ typedef bool** GraphMatrix;
 
 typedef struct _road {
   int city1, city2;
-  struct _road *next;
 } Road;
 
 typedef struct _condition {
@@ -45,13 +44,8 @@ void add_condition_node(Condition **conditionsList, Condition *newCondition)
 void destroy_condition_structures(Condition *condition)
 {
   if (condition) {
-    Road *road, *aux = condition->roads;
-    while (aux) {
-      road = aux;
-      aux = aux->next;
-      free(road);
-    }
     destroy_condition_structures(condition->next);
+    free(condition->roads);
     free(condition);
   }
 }
@@ -97,14 +91,12 @@ void graph_destroy(GraphMatrix graph)
 
 void visit_city(GraphMatrix graph, int citiesCount, int currCity, int availableTolls, TreeNode **tree)
 {
-  printf("At city %i, with %i tolls remaining... \n", currCity, availableTolls);
+  *tree = tree_add_node(*tree, tree_create_node(currCity));
 
   if (availableTolls) {
     int i, j = currCity - 1;
     for (i = 0; i < citiesCount; i++) {
-      printf("  City %i is %i \n", i + 1, graph[i][j]);
       if (graph[i][j]) {
-        *tree = tree_add_node(*tree, tree_create_node(i + 1));
         visit_city(graph, citiesCount, i + 1, availableTolls - 1, tree);
       }
     }
@@ -115,18 +107,14 @@ int *evaluate_visitable_cities(Condition *condition)
 {
   TreeNode *tree = NULL;
   GraphMatrix graph = graph_mount(condition);
-  printf("Created graph... \n");
 
   visit_city(graph, condition->citiesCount, condition->currCity, condition->maxTools, &tree);
   graph_destroy(graph);
 
   int citiesCount = tree_count_nodes(tree);
-  int *visitedCities = (int *) calloc(citiesCount + 1, sizeof(int));
+  tree = tree_remove_node(tree, condition->currCity);
+  int *visitedCities = (int *) calloc(citiesCount, sizeof(int));
   add_to_list(tree, visitedCities, 0);
-  visitedCities[citiesCount] = 0;
 
   return visitedCities;
 }
-  // int len = tree_count_nodes(root);
-  // int *array = calloc(len, sizeof(int));
-  // add_to_list(root, array, 0);
