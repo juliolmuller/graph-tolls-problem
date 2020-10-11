@@ -80,7 +80,7 @@ To execute the program, first you need to compile its source code using a **C co
 
 ```bash
 # Compiles the application to "tolls.exe"
-$ gcc main.c -o tolls
+$ gcc tolls.c -o tolls
 
 # Run the application
 $ tolls
